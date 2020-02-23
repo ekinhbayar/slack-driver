@@ -1,0 +1,9 @@
+<?php declare(strict_types=1);
+
+return [
+    'bot' => [
+        'client_id' => 'xyz',
+        'client_secret' => 'xyz',
+        'signing_secret' => 'xyz',
+    ]
+];

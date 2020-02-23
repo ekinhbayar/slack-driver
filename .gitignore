@@ -1,0 +1,9 @@
+/vendor/
+.phpunit.result.cache
+.idea
+vendor
+phpcs.xml
+phpunit.xml
+infection.json
+infection.log
+/example
