@@ -1012,12 +1012,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/async-bot/core.git",
-                "reference": "44ee8f8886fbda2a4325c520754c8de47e0b3b82"
+                "reference": "61cb414439484872ee2bf8d0bc53941ce23bc1d5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/async-bot/core/zipball/44ee8f8886fbda2a4325c520754c8de47e0b3b82",
-                "reference": "44ee8f8886fbda2a4325c520754c8de47e0b3b82",
+                "url": "https://api.github.com/repos/async-bot/core/zipball/61cb414439484872ee2bf8d0bc53941ce23bc1d5",
+                "reference": "61cb414439484872ee2bf8d0bc53941ce23bc1d5",
                 "shasum": ""
             },
             "require": {
@@ -1059,7 +1059,7 @@
                 }
             ],
             "description": "Shared code for the Async Bot project",
-            "time": "2020-02-23T16:19:00+00:00"
+            "time": "2020-02-23T18:01:38+00:00"
         },
         {
             "name": "cash/lrucache",
