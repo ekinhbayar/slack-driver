@@ -5,6 +5,7 @@ namespace ekinhbayar\Driver\Slack\Event\Data;
 use Amp\Http\Server\Request;
 use Amp\Promise;
 use ekinhbayar\Driver\Slack\Webhook\RequestParser\NewChannelMessage;
+use ekinhbayar\Driver\Slack\Webhook\RequestParser\NewMention;
 use ekinhbayar\Driver\Slack\Webhook\RequestParser\UrlVerification as UrlVerificationParser;
 use function Amp\call;
 use function ExceptionalJSON\decode;
@@ -48,6 +49,8 @@ class Factory
         switch ($parsedBody['event']['type']) {
             case 'message':
                 return (new NewChannelMessage($parsedBody))->parse();
+            case 'app_mention':
+                return (new NewMention($parsedBody))->parse();
             default:
                 throw new \Exception('Event is not implemented (yet).');
         }
