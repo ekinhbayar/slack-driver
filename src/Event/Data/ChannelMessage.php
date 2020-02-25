@@ -20,8 +20,7 @@ class ChannelMessage extends Event
         string $author,
         \DateTimeImmutable $timestamp,
         Channel $channel
-    )
-    {
+    ) {
         parent::__construct($token);
 
         $this->messageBody = $messageBody;

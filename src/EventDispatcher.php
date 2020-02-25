@@ -8,8 +8,8 @@ use Amp\Http\Status;
 use Amp\Promise;
 use AsyncBot\Core\Http\WebHookListener;
 use ekinhbayar\Driver\Slack\Event\Data\ChannelMessage;
+use ekinhbayar\Driver\Slack\Event\Data\Factory;
 use ekinhbayar\Driver\Slack\Event\Listener\OnNewChannelMessage;
-use ekinhbayar\Driver\Slack\Webhook\RequestParser\Factory;
 use function Amp\call;
 
 class EventDispatcher implements WebHookListener

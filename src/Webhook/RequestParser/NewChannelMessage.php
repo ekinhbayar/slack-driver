@@ -2,7 +2,6 @@
 
 namespace ekinhbayar\Driver\Slack\Webhook\RequestParser;
 
-use DateTimeImmutable;
 use ekinhbayar\Driver\Slack\Channel;
 use ekinhbayar\Driver\Slack\Event\Data\ChannelMessage;
 
@@ -22,7 +21,7 @@ class NewChannelMessage
             $this->eventData['token'],
             $this->eventData['event']['text'],
             $this->eventData['event']['user'],
-            DateTimeImmutable::createFromFormat('U.u', $this->eventData['event']['ts']),
+            \DateTimeImmutable::createFromFormat('U.u', $this->eventData['event']['ts']),
             new Channel($this->eventData['event']['channel'], $this->eventData['event']['channel_type'])
         );
     }
