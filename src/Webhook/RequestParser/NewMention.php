@@ -22,7 +22,7 @@ class NewMention
             $this->eventData['event']['text'],
             $this->eventData['event']['user'],
             \DateTimeImmutable::createFromFormat('U.u', $this->eventData['event']['ts']),
-            new Channel($this->eventData['event']['channel'], $this->eventData['event']['channel_type'])
+            new Channel($this->eventData['event']['channel'], $this->eventData['event']['channel_type'] ?? 'channel')
         );
     }
 }
