@@ -7,6 +7,7 @@ use AsyncBot\Core\Driver as DriverInterface;
 use AsyncBot\Core\Http\Server;
 use AsyncBot\Core\Http\WebHook;
 use ekinhbayar\Driver\Slack\Event\Listener\OnNewChannelMessage;
+use ekinhbayar\Driver\Slack\Event\Listener\OnNewMention;
 use function Amp\call;
 
 final class Driver implements DriverInterface
@@ -46,5 +47,10 @@ final class Driver implements DriverInterface
     public function onNewMessage(OnNewChannelMessage $channelMessageListener): void
     {
         $this->eventDispatcher->addChannelMessageEventListener($channelMessageListener);
+    }
+
+    public function onNewMention(OnNewMention $mentionListener): void
+    {
+        $this->eventDispatcher->addMentionEventListener($mentionListener);
     }
 }
