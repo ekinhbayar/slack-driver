@@ -3,21 +3,24 @@
 namespace ekinhbayar\Driver\Slack\Event\Data;
 
 use ekinhbayar\Driver\Slack\Channel;
+use ekinhbayar\Driver\Slack\User;
 
 class ChannelMessage extends Event
 {
     private string $messageBody;
 
-    private string $author;
+    private User $author;
 
     private \DateTimeImmutable $timestamp;
 
     private Channel $channel;
 
+    private bool $isMention = false;
+
     public function __construct(
         string $token,
         string $messageBody,
-        string $author,
+        User $author,
         \DateTimeImmutable $timestamp,
         Channel $channel
     ) {
@@ -34,7 +37,7 @@ class ChannelMessage extends Event
         return $this->messageBody;
     }
 
-    public function getAuthor(): string
+    public function getAuthor(): User
     {
         return $this->author;
     }
@@ -47,5 +50,17 @@ class ChannelMessage extends Event
     public function getChannel(): Channel
     {
         return $this->channel;
+    }
+
+    public function isMention(): bool
+    {
+        return $this->isMention;
+    }
+
+    public function setAsMention(): self
+    {
+        $this->isMention = true;
+
+        return $this;
     }
 }
