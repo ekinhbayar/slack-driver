@@ -5,10 +5,9 @@ namespace ekinhbayar\Driver\Slack\Event\Listener;
 use Amp\Promise;
 use ekinhbayar\Driver\Slack\Event\Data\Mention;
 
-interface OnNewMention
+interface OnMention
 {
     /**
-     * @param Mention $mention
      * @return Promise<null>
      */
     public function __invoke(Mention $mention): Promise;
