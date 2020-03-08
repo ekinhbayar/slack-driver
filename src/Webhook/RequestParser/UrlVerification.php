@@ -4,11 +4,14 @@ namespace ekinhbayar\Driver\Slack\Webhook\RequestParser;
 
 use ekinhbayar\Driver\Slack\Event\Data\UrlVerification as UrlVerificationEvent;
 
-class UrlVerification
+final class UrlVerification
 {
     /** @var array<string,mixed> */
     private array $handshakeData;
 
+    /**
+     * @param array<string,mixed> $handshakeData
+     */
     public function __construct(array $handshakeData)
     {
         $this->handshakeData = $handshakeData;
@@ -18,7 +21,7 @@ class UrlVerification
     {
         return new UrlVerificationEvent(
             $this->handshakeData['token'],
-            $this->handshakeData['challenge']
+            $this->handshakeData['challenge'],
         );
     }
 }

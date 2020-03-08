@@ -8,7 +8,6 @@ use ekinhbayar\Driver\Slack\Event\Data\ChannelMessage;
 interface OnNewChannelMessage
 {
     /**
-     * @param ChannelMessage $channelMessage
      * @return Promise<null>
      */
     public function __invoke(ChannelMessage $channelMessage): Promise;
