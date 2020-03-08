@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace ekinhbayar\Driver\Slack;
+namespace ekinhbayar\Driver\Slack\Event\Data\ValueObject;
 
 class User
 {
