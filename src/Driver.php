@@ -3,45 +3,70 @@
 namespace ekinhbayar\Driver\Slack;
 
 use Amp\Promise;
+use Amp\Success;
 use AsyncBot\Core\Driver as DriverInterface;
+use AsyncBot\Core\Http\Client as HttpClient;
 use AsyncBot\Core\Http\Server;
 use AsyncBot\Core\Http\WebHook;
+use AsyncBot\Core\Message\Node\Message;
+use ekinhbayar\Driver\Slack\Client\Client;
+use ekinhbayar\Driver\Slack\Client\Request\PostMessage;
+use ekinhbayar\Driver\Slack\Event\Dispatcher;
+use ekinhbayar\Driver\Slack\Event\Listener\OnCommand;
+use ekinhbayar\Driver\Slack\Event\Listener\OnMention;
 use ekinhbayar\Driver\Slack\Event\Listener\OnNewChannelMessage;
-use ekinhbayar\Driver\Slack\Event\Listener\OnNewMention;
-use function Amp\call;
 
 final class Driver implements DriverInterface
 {
+    private Client $client;
+
     private Server $server;
 
-    private string $webhookEndpoint;
+    private Configuration $configuration;
 
-    private EventDispatcher $eventDispatcher;
+    private Dispatcher $eventDispatcher;
 
-    public function __construct(Server $server, string $webhookEndpoint)
+    public function __construct(HttpClient $httpClient, Server $server, Configuration $configuration)
     {
+        $this->client          = new Client($httpClient);
         $this->server          = $server;
-        $this->webhookEndpoint = $webhookEndpoint;
+        $this->configuration   = $configuration;
 
-        $this->eventDispatcher = new EventDispatcher;
+        $this->eventDispatcher = new Dispatcher();
     }
 
     /**
-     * @inheritDoc
+     * @return Promise<null>
      */
     public function start(): Promise
     {
-        return call(function () {
-            $this->server->registerWebHook(new WebHook('POST', $this->webhookEndpoint, $this->eventDispatcher));
-        });
+        if ($this->configuration->hasMessageWebhook()) {
+            $this->server->registerWebHook(
+                new WebHook('POST', $this->configuration->getMessageWebhook(), $this->eventDispatcher),
+            );
+        }
+
+        if ($this->configuration->hasCommandWebhook()) {
+            $this->server->registerWebHook(
+                new WebHook('POST', $this->configuration->getCommandWebhook(), $this->eventDispatcher),
+            );
+        }
+
+        return new Success();
     }
 
     /**
-     * @inheritDoc
+     * @return Promise<null>
      */
-    public function postMessage(string $message): Promise
+    public function postMessage(Message $message): Promise
     {
-        // TODO: Implement postMessage() method.
+        return $this->client->request(
+            new PostMessage(
+                $this->configuration->getCredentials()->getAccessToken(),
+                $this->configuration->getChannel(),
+                $message,
+            ),
+        );
     }
 
     public function onNewMessage(OnNewChannelMessage $channelMessageListener): void
@@ -49,8 +74,13 @@ final class Driver implements DriverInterface
         $this->eventDispatcher->addChannelMessageEventListener($channelMessageListener);
     }
 
-    public function onNewMention(OnNewMention $mentionListener): void
+    public function onMention(OnMention $mentionListener): void
     {
         $this->eventDispatcher->addMentionEventListener($mentionListener);
+    }
+
+    public function onCommand(OnCommand $commandListener): void
+    {
+        $this->eventDispatcher->addCommandEventListener($commandListener);
     }
 }
